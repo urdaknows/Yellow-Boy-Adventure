@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
 import input.KeyHandler;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	private Thread gameThread;
 	public KeyHandler key = new KeyHandler();
+	private Player player = new Player(this, key);
 	
 	int playerX = 100;
 	int playerY = 100;
@@ -78,28 +80,15 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void update() {
+		player.update();
 		
-		
-		if (key.upPressed == true) {
-			playerY -= playerSpeed;
-		}
-		else if (key.downPressed == true) {
-			playerY += playerSpeed;
-		}
-		else if (key.leftPressed == true) {
-			playerX -= playerSpeed;
-		}
-		else if (key.rightPressed == true) {
-			playerX += playerSpeed;
-		}
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.white);
-		g2.fillRect(playerX, playerY, tileSize, tileSize);
+		player.draw(g2);
 		g2.dispose();
 	}
 	
